@@ -35,13 +35,17 @@ body {
     z-index: 9999;
 }
 
-header {
-    padding: 1.5rem var(--container-padding);
+body > header {
+    padding: 1.0rem var(--container-padding);
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    z-index: 100;
-    background: rgba(236, 234, 228, 0.9);
+    z-index: 1000;
+    background: rgba(236, 234, 228, 0.75);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 nav {
@@ -141,9 +145,11 @@ nav {
 
 .archive-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 4rem 2rem; /* Відступи між картками */
-    align-items: start;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .archive-main {
@@ -176,6 +182,8 @@ nav {
     justify-content: space-between;
     isolation: isolate;
     backface-visibility: hidden;
+    width: 100%;
+    max-width: none;
 }
 
 .archive-card:hover {
@@ -347,11 +355,8 @@ nav {
     100% { transform: translateX(-33.333%); }
 }
 
-@media (max-width: 768px) {
-    :root { --container-padding: 5%; }
-    .menu-links { gap: 0.8rem; }
-    .menu-links a { font-size: 0.7rem; }
-    .main-logo-img {
-        height: 45px;
-    }
+.logo-img, .main-logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
 }
