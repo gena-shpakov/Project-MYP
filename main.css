@@ -15,15 +15,15 @@ body {
 }
 
 .main-logo-img {
-    height: 60px;
+    height: 80px;
     width: auto;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     filter: drop-shadow(0px 0px 0px rgba(0,0,0,0));
 }
 
-.logo-link:hover .main-logo-img {
-    transform: scale(1.1) rotate(-5deg);
-    filter: drop-shadow(0px 4px 8px rgba(178, 34, 34, 0.3)); 
+.logo a:hover .main-logo-img {
+    transform: translateY(-6px) scale(1.03);
+    filter: drop-shadow(0px 6px 12px rgba(178, 34, 34, 0.25)); 
 }
 
 .noise-overlay {
@@ -36,13 +36,13 @@ body {
 }
 
 body > header {
-    padding: 1.0rem var(--container-padding);
+    padding: 0.8rem var(--container-padding);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(236, 234, 228, 0.75);
+    background: rgba(236, 234, 228, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -58,7 +58,11 @@ nav {
 
 .logo { font-family: 'Oswald', sans-serif; font-size: 1.2rem; letter-spacing: 2px; }
 
-.menu-links { display: flex; gap: 1.5rem; }
+.menu-links { 
+    display: flex; 
+    gap: 2rem; 
+    align-items: center;
+}
 
 .menu-links a {
     text-decoration: none;
@@ -66,11 +70,88 @@ nav {
     font-family: 'JetBrains Mono', monospace;
     font-size: 20px;
     font-weight: bold;
+    position: relative;
+    display: inline-block;
+    padding: 4px 0;
+    opacity: 0.5;
+    transition: opacity 0.3s, color 0.3 ease;
+}
+
+.menu-links a:hover {
+    opacity: 1;
+}
+
+.menu-links a:hover::after {
+    width: 100%;
+}
+
+.menu-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 50%;
+    transform: translateY(50%);
+    left: 0;
+    width: 0;
+    height: 4px;
+    background-color: var(--red);
+    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.menu-links a.active {
+    opacity: 1;
+    color: var(--black);
+}
+
+.menu-links a.active::after {
+    width: 100%;
 }
 
 .main-title, .pre-title, .hero-description, .cta-button, .hero-image-wrapper {
     opacity: 0;
     transform: translateY(30px);
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 16px 40px;
+    font-family: 'JetBrains Mono', monospace; /* Моноширинний шрифт додає документності */
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-decoration: none;
+    color: var(--black);
+    border: 2px solid var(--black);
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.3s ease;
+    top: 30px;
+}
+
+/* Створюємо шторку, яка виїжджає */
+.cta-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    z-index: -1;
+}
+
+.cta-button:hover {
+    color: #ffffff;
+    border-color: var(--red);
+}
+
+.cta-button:hover::after {
+    transform: scaleX(1);
 }
 
 .hero {
@@ -350,13 +431,183 @@ nav {
     transform: rotate(10deg);
 }
 
+.auth-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.auth-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.auth-box {
+    background: var(--bg);
+    border: 2px solid var(--black);
+    padding: 3rem 2.5rem;
+    max-width: 550px;
+    width: 95%;
+    box-shadow: 15px 15px 0px var(--red);
+    position: relative;
+    text-align: left;
+    transform: scale(0.95);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.auth-overlay.show .auth-box {
+    transform: scale(1);
+}
+.auth-header {
+    font-family: 'Oswald', sans-serif;
+    font-size: 25px;
+    letter-spacing: 2px;
+    color: var(--black);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--black);
+    padding-bottom: 0.5rem;
+    white-space: nowrap;
+}
+
+.auth-desc {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+}
+
+#admin-password-input {
+    width: 100%;
+    padding: 12px 15px;
+    background: transparent;
+    border: 2px solid var(--black);
+    color: var(--black);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    letter-spacing: 4px; 
+    outline: none;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.3s;
+}
+
+#admin-password-input:focus {
+    border-color: var(--red);
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.auth-buttons button {
+    flex: 1;
+    padding: 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border: 2px solid var(--black);
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+#auth-submit-btn {
+    background: var(--black);
+    color: var(--bg);
+}
+
+#auth-submit-btn:hover {
+    background: var(--red);
+    border-color: var(--red);
+    color: white;
+}
+
+#auth-close-btn {
+    color: var(--black);
+}
+
+#auth-close-btn:hover {
+    background: rgba(18, 18, 18, 0.08);
+}
+
+.auth-error {
+    margin-top: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: bold;
+    min-height: 20px;
+    text-transform: uppercase;
+}
+
 @keyframes move-around {
     0% { transform: translateX(0); }
     100% { transform: translateX(-33.333%); }
 }
 
-.logo-img, .main-logo-img {
-    height: 50px;
+.logo-img {
     width: auto;
     object-fit: contain;
+}
+@media (max-width: 768px) {
+    .archive-main {
+        padding: 110px 16px 40px;
+    }
+
+    .archive-title {
+        font-size: 2.2rem;
+        line-height: 1.1;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .archive-subtitle {
+        font-size: 18px;
+        line-height: 1.4;
+    }
+
+    .archive-grid {
+        grid-template-columns: 1fr !important; 
+        gap: 16px;
+        padding: 0;
+    }
+
+    .archive-card {
+        padding: 2rem 1.2rem 1.2rem;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .archive-card h3 {
+        font-size: 1.4rem;
+        line-height: 1.2;
+    }
+
+    .card-body p {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+}
+@media (max-width: 360px) {
+    .archive-title {
+        font-size: 1.8rem;
+    }
+    
+    .archive-card h3 {
+        font-size: 1.2rem;
+    }
 }

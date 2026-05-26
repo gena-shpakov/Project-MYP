@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МУР | КНИГА ОБЛІКУ АРХІВУ (АДМІН-ПАНЕЛЬ)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="case-page">
+
+    <div class="noise-overlay"></div>
+
+    <div class="case-main">
+        <div class="case-container admin-box">
+            
+            <header class="case-header">
+                <div class="case-number">[ СЛУЖБОВИЙ ДОСТУП ]</div>
+                <h1 class="case-name">КНИГА ОБЛІКУ АРХІВУ</h1>
+                <div class="case-status">РЕЖИМ КЕРУВАННЯ ТА МОНІТОРИНГУ</div>
+            </header>
+
+            <div class="admin-nav">
+                <a href="#stats-section" class="admin-nav-link">Перегляд логів візитів</a>
+                <a href="#form-section" class="admin-nav-link">Внести нову справу</a>
+                <a href="index.html" class="admin-nav-link back-to-site">← Вихід на сайт</a>
+            </div>
+
+            <section id="stats-section" class="content-block admin-section">
+                <h2>ЖУРНАЛ СТАТИСТИКИ (РЕАЛЬНИЙ ЧАС)</h2>
+                
+                <div class="archive-grid admin-stats-cards">
+                    <div class="archive-card stat-mini-card">
+                        <div class="card-folder-tab">ЛОГ.01</div>
+                        <div class="card-body">
+                            <p>ЗАГАЛЬНА КІЛЬКІСТЬ ВІЗИТІВ</p>
+                            <h3 class="stat-big-number" id="total-visits">0</h3>
+                        </div>
+                    </div>
+                    <div class="archive-card stat-mini-card">
+                        <div class="card-folder-tab">ЛОГ.02</div>
+                        <div class="card-body">
+                            <p>УНІКАЛЬНІ ЧИТАЧІ</p>
+                            <h3 class="stat-big-number" id="unique-users">0</h3>
+                        </div>
+                    </div>
+                    <div class="archive-card stat-mini-card highlight-card">
+                        <div class="card-folder-tab">ЛОГ.03</div>
+                        <div class="card-body">
+                            <p>ФОКУС УВАГИ</p>
+                            <h3 class="stat-big-number" id="focus-page" style="color: var(--red);">---</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="archive-table">
+                        <thead>
+                            <tr>
+                                <th>КОД ВІЗИТУ</th>
+                                <th>ВІДКРИТА СТОРІНКА</th>
+                                <th>ЧАС ФІКСАЦІЇ</th>
+                                <th>БРАУЗЕР КОРИСТУВАЧА</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-table-body">
+                            <tr><td colspan="4" style="text-align:center; padding: 20px;">Завантаження журналу безпеки...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="case-footer" style="margin-bottom: 40px;"></div>
+
+            <section id="form-section" class="content-block admin-section">
+                <h2>АНКЕТА ДЛЯ РЕЄСТРАЦІЇ НОВОГО ШІСТДЕСЯТНИКА</h2>
+                <p style="font-style: italic; margin-bottom: 25px; opacity: 0.8; font-size: 21px;">
+                    Заповніть форму нижче, щоб автоматично згенерувати та підшити нову картку до загального цифрового архіву.
+                </p>
+
+                <form class="archive-form" id="add-case-form">
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label>НОМЕР СПРАВИ:</label>
+                            <input type="text" id="case-number" placeholder="Наприклад: СПРАВА №05/85" required>
+                        </div>
+                        <div class="input-group">
+                            <label>ПІБ ШІСТДЕСЯТНИКА:</label>
+                            <input type="text" id="case-name" placeholder="Наприклад: ВАСИЛЬ СИМОНЕНКО" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>СТАТУС ПОЕТА / ДІЯЧА:</label>
+                        <input type="text" id="case-status" placeholder="Наприклад: НЕЗЛАМНИЙ / ЗАСУДЖЕНИЙ" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>АНКЕТНІ ДАНІ (через крапку з комою):</label>
+                        <textarea id="case-bio" rows="3" placeholder="ДАТА НАРОДЖЕННЯ: 08.01.1935; МІСЦЕ: с. Біївці; ДІЯЛЬНІСТЬ: поет, журналіст..." required></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>ПОСИЛАННЯ НА АРХІВНЕ ФОТО (URL):</label>
+                        <input type="url" id="case-photo" placeholder="Введіть шлях до зображення...">
+                    </div>
+
+                    <div class="input-group">
+                        <label>ЦИТАТА / РЯДКИ З ТРЕКУ «МУР»:</label>
+                        <textarea id="case-lyrics" rows="4" placeholder="«...І хтось там каже: Пиши протести...»" required></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="back-link submit-archive-btn">ЗБЕРЕГТИ ТА ПІДПИСАТИ ДО АРХІВУ →</button>
+                    </div>
+                </form>
+            </section>
+
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // Імпортуємо конфігурацію з твого файлу config.js
+        import { firebaseConfig } from "./config.js";
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const tableBody = document.getElementById('logs-table-body');
+
+        // 1. ВИВІД ЛОГІВ ВІЗИТІВ НА ЕКРАН ТА АВТОМАТИЧНА СТАТИСТИКА
+        const visitsRef = ref(database, 'visits');
+        
+        // Посилання на елементи карток статистики (id тепер ідеально збігаються з HTML)
+        const totalVisitsElem = document.getElementById('total-visits');
+        const uniqueUsersElem = document.getElementById('unique-users');
+        const focusPageElem = document.getElementById('focus-page');
+
+        onValue(visitsRef, (snapshot) => {
+          if (!tableBody) return;
+          tableBody.innerHTML = '';
+        
+          const data = snapshot.val();
+          if (data) {
+            const sortedVisits = Object.keys(data).reverse();
+            
+            // Збираємо дані для аналітики
+            let pageCounts = {};
+            let userAgentsSet = new Set();
+
+            sortedVisits.forEach((key) => {
+              const visit = data[key];
+              
+              // Рахуємо унікальні браузери (імітація унікальних користувачів)
+              if (visit.userAgent) {
+                userAgentsSet.add(visit.userAgent);
+              }
+
+              // Рахуємо популярність сторінок
+              if (visit.page) {
+                pageCounts[visit.page] = (pageCounts[visit.page] || 0) + 1;
+              }
+
+              // Рендеринг рядка таблиці
+              const date = visit.timestamp ? new Date(visit.timestamp).toLocaleString('uk-UA') : 'Фіксація...';
+              const row = `
+                <tr>
+                  <td>#${key.substring(1, 6).toUpperCase()}</td>
+                  <td><code>/${visit.page}</code></td>
+                  <td>${date}</td>
+                  <td style="font-size: 11px; opacity: 0.6;">${visit.userAgent}</td>
+                </tr>
+              `;
+              tableBody.insertAdjacentHTML('beforeend', row);
+            });
+
+            // Виводимо прораховану статистику на картки замість хардкоду!
+            if (totalVisitsElem) totalVisitsElem.textContent = sortedVisits.length;
+            if (uniqueUsersElem) uniqueUsersElem.textContent = userAgentsSet.size;
+            
+            // Визначаємо топ-сторінку (Фокус уваги)
+            if (focusPageElem && Object.keys(pageCounts).length > 0) {
+              const topPage = Object.keys(pageCounts).reduce((a, b) => pageCounts[a] > pageCounts[b] ? a : b);
+              const decodedPage = decodeURIComponent(topPage);
+              focusPageElem.textContent = decodedPage.replace('.html', '').toUpperCase();
+            }
+
+          } else {
+            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">Очікування перших читачів...</td></tr>';
+            if (totalVisitsElem) totalVisitsElem.textContent = '0';
+            if (uniqueUsersElem) uniqueUsersElem.textContent = '0';
+            if (focusPageElem) focusPageElem.textContent = '---';
+          }
+        });
+
+        // 2. ВІДПРАВКА ФОРМИ В АРХІВ (ГІЛКА 'cards')
+        const addCaseForm = document.getElementById('add-case-form');
+        if (addCaseForm) {
+            addCaseForm.addEventListener('submit', (e) => {
+                e.preventDefault(); // Зупиняємо перезавантаження
+
+                const newCase = {
+                    number: document.getElementById('case-number').value,
+                    name: document.getElementById('case-name').value,
+                    status: document.getElementById('case-status').value,
+                    bio: document.getElementById('case-bio').value,
+                    photo: document.getElementById('case-photo').value || 'https://via.placeholder.com/150',
+                    lyrics: document.getElementById('case-lyrics').value,
+                    createdAt: new Date().toISOString()
+                };
+
+                const cardsRef = ref(database, 'cards');
+                push(cardsRef, newCase)
+                    .then(() => {
+                        alert(`Справу для "${newCase.name}" успішно внесено до архіву!`);
+                        addCaseForm.reset(); // Очищуємо поля
+                    })
+                    .catch((err) => {
+                        console.error("Помилка доступу:", err);
+                        alert("Помилка збереження. Перевірте консоль або правила Firebase.");
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

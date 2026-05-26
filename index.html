@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>МУР | Фанатський Архів</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="main.css">
+    <script type="module" src="logger.js"></script>
 </head>
 <body>
     <div class="noise-overlay"></div>
@@ -13,13 +15,14 @@
     <header>
         <nav>
             <div class="logo">
-                <a href="main.html" class="logo-link">
+                <a href="index.html" class="logo-link">
                     <img src="MYR on site.png" alt="MYP" class="main-logo-img">
                 </a>
             </div>
             <div class="menu-links">
+                <a href="index.html" class="active">ГОЛОВНА</a>
                 <a href="archive.html">АРХІВ</a>
-                <a href="#voices">ГОЛОСИ</a>
+                <a href="voices.html">ГОЛОСИ</a>
                 <a href="about_site.html">ПРО САЙТ</a>
             </div>
         </nav>
@@ -50,7 +53,20 @@
         </div>
     </main>
 
+    <div id="admin-auth-overlay" class="auth-overlay">
+        <div class="auth-box">
+            <div class="auth-header">[ СИСТЕМА КОНТРОЛЮ ДОСТУПУ ]</div>
+            <p class="auth-desc">Введіть код доступу для авторизації в архіві:</p>
+            <input type="password" id="admin-password-input" placeholder="••••••••" autocomplete="off">
+            <div class="auth-buttons">
+                <button id="auth-submit-btn">УВІЙТИ</button>
+                <button id="auth-close-btn">СКАСУВАТИ</button>
+            </div>
+            <div id="auth-error-msg" class="auth-error"></div>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="main.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
 </html>
