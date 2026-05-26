@@ -2,10 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-const auth = getAuth(app);
-
 const firebaseConfig = {
     apiKey: "AIzaSyCNTaXpk4Bpo8iG9Rt-_HbRj8nLgcnGxm0",
     authDomain: "projectmyp-88373.firebaseapp.com",
@@ -15,6 +11,11 @@ const firebaseConfig = {
     messagingSenderId: "836849026238",
     appId: "1:836849026238:web:f578478f70b1a85faa0aef"
 };
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const auth = getAuth(app);
+
 
 window.addEventListener('load', () => {
     if (typeof gsap !== "undefined") {
