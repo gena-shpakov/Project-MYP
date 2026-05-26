@@ -1,6 +1,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getDatabase, ref, push, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-import { firebaseConfig } from "./config.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCNTaXpk4Bpo8iG9Rt-_HbRj8nLgcnGxm0",
+    authDomain: "projectmyp-88373.firebaseapp.com",
+    databaseURL: "https://projectmyp-88373-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "projectmyp-88373",
+    storageBucket: "projectmyp-88373.firebasestorage.app",
+    messagingSenderId: "836849026238",
+    appId: "1:836849026238:web:f578478f70b1a85faa0aef"
+};
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
