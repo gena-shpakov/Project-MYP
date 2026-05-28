@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>МУР | КНИГА ОБЛІКУ АРХІВУ (АДМІН-ПАНЕЛЬ)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="admin.css">
 </head>
@@ -23,6 +25,7 @@
             <div class="admin-nav">
                 <a href="#stats-section" class="admin-nav-link">Перегляд логів візитів</a>
                 <a href="#form-section" class="admin-nav-link">Внести нову справу</a>
+                <button id="admin-logout-btn" class="admin-nav-link" style="background: none; border: none; cursor: pointer; font-family: inherit; color: var(--red);">Вийти з кабінету</button>
                 <a href="index.html" class="admin-nav-link back-to-site">← Вихід на сайт</a>
             </div>
 
@@ -122,84 +125,102 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-        // Імпортуємо конфігурацію з твого файлу config.js
-        import { firebaseConfig } from "./config.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCNTaXpk4Bpo8iG9Rt-_HbRj8nLgcnGxm0",
+            authDomain: "projectmyp-88373.firebaseapp.com",
+            databaseURL: "https://projectmyp-88373-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "projectmyp-88373",
+            storageBucket: "projectmyp-88373.firebasestorage.app",
+            messagingSenderId: "836849026238",
+            appId: "1:836849026238:web:f578478f70b1a85faa0aef"
+        };
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
+        const auth = getAuth(app);
         const tableBody = document.getElementById('logs-table-body');
 
-        // 1. ВИВІД ЛОГІВ ВІЗИТІВ НА ЕКРАН ТА АВТОМАТИЧНА СТАТИСТИКА
-        const visitsRef = ref(database, 'visits');
-        
-        // Посилання на елементи карток статистики (id тепер ідеально збігаються з HTML)
-        const totalVisitsElem = document.getElementById('total-visits');
-        const uniqueUsersElem = document.getElementById('unique-users');
-        const focusPageElem = document.getElementById('focus-page');
+        // Суворий захист сторінки на рівні CSS
+        document.body.style.display = 'none';
 
-        onValue(visitsRef, (snapshot) => {
-          if (!tableBody) return;
-          tableBody.innerHTML = '';
-        
-          const data = snapshot.val();
-          if (data) {
-            const sortedVisits = Object.keys(data).reverse();
-            
-            // Збираємо дані для аналітики
-            let pageCounts = {};
-            let userAgentsSet = new Set();
-
-            sortedVisits.forEach((key) => {
-              const visit = data[key];
-              
-              // Рахуємо унікальні браузери (імітація унікальних користувачів)
-              if (visit.userAgent) {
-                userAgentsSet.add(visit.userAgent);
-              }
-
-              // Рахуємо популярність сторінок
-              if (visit.page) {
-                pageCounts[visit.page] = (pageCounts[visit.page] || 0) + 1;
-              }
-
-              // Рендеринг рядка таблиці
-              const date = visit.timestamp ? new Date(visit.timestamp).toLocaleString('uk-UA') : 'Фіксація...';
-              const row = `
-                <tr>
-                  <td>#${key.substring(1, 6).toUpperCase()}</td>
-                  <td><code>/${visit.page}</code></td>
-                  <td>${date}</td>
-                  <td style="font-size: 11px; opacity: 0.6;">${visit.userAgent}</td>
-                </tr>
-              `;
-              tableBody.insertAdjacentHTML('beforeend', row);
-            });
-
-            // Виводимо прораховану статистику на картки замість хардкоду!
-            if (totalVisitsElem) totalVisitsElem.textContent = sortedVisits.length;
-            if (uniqueUsersElem) uniqueUsersElem.textContent = userAgentsSet.size;
-            
-            // Визначаємо топ-сторінку (Фокус уваги)
-            if (focusPageElem && Object.keys(pageCounts).length > 0) {
-              const topPage = Object.keys(pageCounts).reduce((a, b) => pageCounts[a] > pageCounts[b] ? a : b);
-              const decodedPage = decodeURIComponent(topPage);
-              focusPageElem.textContent = decodedPage.replace('.html', '').toUpperCase();
+        onAuthStateChanged(auth, (user) => {
+            if (user && user.email === "admin@projectmup.com") {
+                // Користувач підтверджений — відкриваємо інтерфейс та запускаємо логер
+                document.body.style.display = 'block';
+                ініціалізуватиАрхів(); 
+            } else {
+                // Спроба несанкціонованого входу — миттєве повернення на сайт
+                window.location.href = 'index.html';
             }
-
-          } else {
-            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">Очікування перших читачів...</td></tr>';
-            if (totalVisitsElem) totalVisitsElem.textContent = '0';
-            if (uniqueUsersElem) uniqueUsersElem.textContent = '0';
-            if (focusPageElem) focusPageElem.textContent = '---';
-          }
         });
 
-        // 2. ВІДПРАВКА ФОРМИ В АРХІВ (ГІЛКА 'cards')
+        // ФУНКЦІЯ ПІДКЛЮЧЕННЯ ДО БАЗИ ДАНИХ ПІСЛЯ ПЕРЕВІРКИ ПАРОЛЯ
+        function ініціалізуватиАрхів() {
+            const visitsRef = ref(database, 'visits');
+            
+            const totalVisitsElem = document.getElementById('total-visits');
+            const uniqueUsersElem = document.getElementById('unique-users');
+            const focusPageElem = document.getElementById('focus-page');
+
+            onValue(visitsRef, (snapshot) => {
+                if (!tableBody) return;
+                tableBody.innerHTML = '';
+            
+                const data = snapshot.val();
+                if (data) {
+                    const sortedVisits = Object.keys(data).reverse();
+                    
+                    let pageCounts = {};
+                    let userAgentsSet = new Set();
+
+                    sortedVisits.forEach((key) => {
+                        const visit = data[key];
+                        
+                        if (visit.userAgent) {
+                            userAgentsSet.add(visit.userAgent);
+                        }
+
+                        if (visit.page) {
+                            pageCounts[visit.page] = (pageCounts[visit.page] || 0) + 1;
+                        }
+
+                        const date = visit.timestamp ? new Date(visit.timestamp).toLocaleString('uk-UA') : 'Фіксація...';
+                        const row = `
+                            <tr>
+                                <td>#${key.substring(1, 6).toUpperCase()}</td>
+                                <td><code>/${visit.page}</code></td>
+                                <td>${date}</td>
+                                <td style="font-size: 11px; opacity: 0.6;">${visit.userAgent}</td>
+                            </tr>
+                        `;
+                        tableBody.insertAdjacentHTML('beforeend', row);
+                    });
+
+                    if (totalVisitsElem) totalVisitsElem.textContent = sortedVisits.length;
+                    if (uniqueUsersElem) uniqueUsersElem.textContent = userAgentsSet.size;
+                    
+                    if (focusPageElem && Object.keys(pageCounts).length > 0) {
+                        const topPage = Object.keys(pageCounts).reduce((a, b) => pageCounts[a] > pageCounts[b] ? a : b);
+                        const decodedPage = decodeURIComponent(topPage);
+                        focusPageElem.textContent = decodedPage.replace('.html', '').toUpperCase();
+                    }
+
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">Очікування перших читачів...</td></tr>';
+                    if (totalVisitsElem) totalVisitsElem.textContent = '0';
+                    if (uniqueUsersElem) uniqueUsersElem.textContent = '0';
+                    if (focusPageElem) focusPageElem.textContent = '---';
+                }
+            });
+        }
+
+        // ВІДПРАВКА ФОРМИ В АРХІВ (ГІЛКА 'cards')
         const addCaseForm = document.getElementById('add-case-form');
         if (addCaseForm) {
             addCaseForm.addEventListener('submit', (e) => {
-                e.preventDefault(); // Зупиняємо перезавантаження
+                e.preventDefault();
 
                 const newCase = {
                     number: document.getElementById('case-number').value,
@@ -215,12 +236,24 @@
                 push(cardsRef, newCase)
                     .then(() => {
                         alert(`Справу для "${newCase.name}" успішно внесено до архіву!`);
-                        addCaseForm.reset(); // Очищуємо поля
+                        addCaseForm.reset();
                     })
                     .catch((err) => {
                         console.error("Помилка доступу:", err);
                         alert("Помилка збереження. Перевірте консоль або правила Firebase.");
                     });
+            });
+        }
+
+        // КНОПКА РОЗЛОГІНУ (ВИНЕСЕНО В НАВІГАЦІЮ)
+        const logoutBtn = document.getElementById('admin-logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    window.location.href = 'index.html';
+                }).catch((err) => {
+                    console.error("Помилка виходу:", err);
+                });
             });
         }
     </script>

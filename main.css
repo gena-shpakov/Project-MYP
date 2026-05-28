@@ -562,9 +562,57 @@ nav {
     width: auto;
     object-fit: contain;
 }
-@media (max-width: 768px) {
+:root {
+        --container-padding: 4%;
+    }
+
+    /* 2. Адаптація головної шапки */
+    body > header {
+        padding: 0.6rem var(--container-padding);
+    }
+
+    nav {
+        flex-direction: column; /* Ставимо логотип та меню один під одним */
+        gap: 0.5rem;
+        padding-bottom: 0.8rem;
+    }
+
+    .main-logo-img {
+        height: 55px; /* Зменшуємо логотип, щоб він не займав пів екрана */
+    }
+
+    .menu-links {
+        gap: 1rem; /* Зменшуємо відстань між посиланнями */
+        width: 100%;
+        justify-content: center; /* Центруємо посилання на мобільних */
+    }
+
+    .menu-links a {
+        font-size: 15px; /* Робимо шрифт меню читабельним для телефонів */
+        padding: 2px 0;
+    }
+
+    /* 3. Головна сторінка (Hero Section) */
+    .hero {
+        padding: 160px var(--container-padding) 60px; /* Коригуємо відступ зверху через нову висоту шапки */
+        min-height: auto;
+    }
+
+    .hero-container {
+        font-size: 18px;
+    }
+
+    .cta-button {
+        font-size: 18px; /* Зменшуємо кнопку дії */
+        padding: 12px 28px;
+        width: 100%; /* На мобільних кнопка на всю ширину виглядає набагато зручнішою для кліку */
+        max-width: 320px;
+        text-align: center;
+    }
+
+    /* 4. Секція Архіву (Твої поточні стилі з покращеннями) */
     .archive-main {
-        padding: 110px 16px 40px;
+        padding: 170px var(--container-padding) 40px;
     }
 
     .archive-title {
@@ -577,12 +625,13 @@ nav {
     .archive-subtitle {
         font-size: 18px;
         line-height: 1.4;
+        margin-top: 0.5rem;
     }
 
     .archive-grid {
         grid-template-columns: 1fr !important; 
         gap: 16px;
-        padding: 0;
+        padding: 20px 0 0 0; /* Прибираємо бокові падінги у сітки, бо вони вже є у майна */
     }
 
     .archive-card {
@@ -601,13 +650,71 @@ nav {
         font-size: 16px;
         line-height: 1.4;
     }
-}
+
+    /* 5. Вікно авторизації (Адмінка) */
+    .auth-box {
+        padding: 2rem 1.5rem; /* Зменшуємо внутрішні відступи картки */
+        box-shadow: 8px 8px 0px var(--red); /* Зменшуємо бруталістичну тінь, щоб вона не вилізала за екран */
+    }
+
+    .auth-header {
+        font-size: 19px; /* Зменшуємо заголовок */
+        white-space: normal; /* ДОЗВОЛЯЄМО перенос тексту, щоб напис "З'ЄДНАННЯ З АРХІВОМ..." не ламав екран */
+        word-wrap: break-word;
+    }
+
+    #admin-password-input {
+        font-size: 1.1rem;
+        padding: 10px;
+        letter-spacing: 2px; /* Трохи зменшуємо інтервал, щоб крапки пароля вміщалися */
+    }
+
+    /* 6. Сторінка "Про проєкт/Про творче об'єднання" */
+    .about-main {
+        padding: 170px var(--container-padding) 60px;
+    }
+
+    .about-title {
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .disclaimer-box {
+        padding-left: 1rem; /* Зменшуємо лінію-відступ зліва */
+        margin-bottom: 2rem;
+    }
+
+    .disclaimer-box p {
+        font-size: 1.1rem; /* Стандартний читабельний розмір для тексту */
+        margin-bottom: 1rem;
+    }
+
+    .links-grid {
+        grid-template-columns: 1fr 1fr; /* Робимо офіційні посилання у два стовпчики замість одного або кучі */
+        gap: 10px;
+    }
+
+    .social-link {
+        padding: 1rem 0.5rem;
+    }
 @media (max-width: 360px) {
-    .archive-title {
+    .archive-title, .about-title {
         font-size: 1.8rem;
     }
     
     .archive-card h3 {
         font-size: 1.2rem;
+    }
+
+    .menu-links {
+        gap: 0.6rem;
+    }
+
+    .menu-links a {
+        font-size: 13px;
+    }
+    
+    .auth-header {
+        font-size: 16px;
     }
 }
