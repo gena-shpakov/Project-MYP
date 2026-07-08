@@ -52,8 +52,6 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--black);
-    padding-bottom: 0.5rem;
 }
 
 .logo { font-family: 'Oswald', sans-serif; font-size: 1.2rem; letter-spacing: 2px; }
@@ -562,39 +560,41 @@ nav {
     width: auto;
     object-fit: contain;
 }
-:root {
+@media (max-width: 768px) {
+
+    :root {
         --container-padding: 4%;
     }
 
-    /* 2. Адаптація головної шапки */
+    /* Шапка */
     body > header {
         padding: 0.6rem var(--container-padding);
     }
 
     nav {
-        flex-direction: column; /* Ставимо логотип та меню один під одним */
+        flex-direction: column;
         gap: 0.5rem;
         padding-bottom: 0.8rem;
     }
 
     .main-logo-img {
-        height: 55px; /* Зменшуємо логотип, щоб він не займав пів екрана */
+        height: 55px;
     }
 
     .menu-links {
-        gap: 1rem; /* Зменшуємо відстань між посиланнями */
         width: 100%;
-        justify-content: center; /* Центруємо посилання на мобільних */
+        justify-content: center;
+        gap: 1rem;
     }
 
     .menu-links a {
-        font-size: 15px; /* Робимо шрифт меню читабельним для телефонів */
+        font-size: 15px;
         padding: 2px 0;
     }
 
-    /* 3. Головна сторінка (Hero Section) */
+    /* Hero */
     .hero {
-        padding: 160px var(--container-padding) 60px; /* Коригуємо відступ зверху через нову висоту шапки */
+        padding: 160px var(--container-padding) 60px;
         min-height: auto;
     }
 
@@ -603,14 +603,14 @@ nav {
     }
 
     .cta-button {
-        font-size: 18px; /* Зменшуємо кнопку дії */
+        font-size: 18px;
         padding: 12px 28px;
-        width: 100%; /* На мобільних кнопка на всю ширину виглядає набагато зручнішою для кліку */
+        width: 100%;
         max-width: 320px;
         text-align: center;
     }
 
-    /* 4. Секція Архіву (Твої поточні стилі з покращеннями) */
+    /* Архів */
     .archive-main {
         padding: 170px var(--container-padding) 40px;
     }
@@ -629,14 +629,13 @@ nav {
     }
 
     .archive-grid {
-        grid-template-columns: 1fr !important; 
+        grid-template-columns: 1fr !important;
         gap: 16px;
-        padding: 20px 0 0 0; /* Прибираємо бокові падінги у сітки, бо вони вже є у майна */
+        padding: 20px 0 0 0;
     }
 
     .archive-card {
         padding: 2rem 1.2rem 1.2rem;
-        box-sizing: border-box;
         width: 100%;
         max-width: 100%;
     }
@@ -651,25 +650,7 @@ nav {
         line-height: 1.4;
     }
 
-    /* 5. Вікно авторизації (Адмінка) */
-    .auth-box {
-        padding: 2rem 1.5rem; /* Зменшуємо внутрішні відступи картки */
-        box-shadow: 8px 8px 0px var(--red); /* Зменшуємо бруталістичну тінь, щоб вона не вилізала за екран */
-    }
-
-    .auth-header {
-        font-size: 19px; /* Зменшуємо заголовок */
-        white-space: normal; /* ДОЗВОЛЯЄМО перенос тексту, щоб напис "З'ЄДНАННЯ З АРХІВОМ..." не ламав екран */
-        word-wrap: break-word;
-    }
-
-    #admin-password-input {
-        font-size: 1.1rem;
-        padding: 10px;
-        letter-spacing: 2px; /* Трохи зменшуємо інтервал, щоб крапки пароля вміщалися */
-    }
-
-    /* 6. Сторінка "Про проєкт/Про творче об'єднання" */
+    /* Про сайт */
     .about-main {
         padding: 170px var(--container-padding) 60px;
     }
@@ -680,28 +661,50 @@ nav {
     }
 
     .disclaimer-box {
-        padding-left: 1rem; /* Зменшуємо лінію-відступ зліва */
+        padding-left: 1rem;
         margin-bottom: 2rem;
     }
 
     .disclaimer-box p {
-        font-size: 1.1rem; /* Стандартний читабельний розмір для тексту */
+        font-size: 1.1rem;
         margin-bottom: 1rem;
     }
 
     .links-grid {
-        grid-template-columns: 1fr 1fr; /* Робимо офіційні посилання у два стовпчики замість одного або кучі */
+        grid-template-columns: 1fr 1fr;
         gap: 10px;
     }
 
     .social-link {
         padding: 1rem 0.5rem;
     }
+
+    /* Авторизація */
+    .auth-box {
+        padding: 2rem 1.5rem;
+        box-shadow: 8px 8px 0px var(--red);
+    }
+
+    .auth-header {
+        font-size: 19px;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+
+    #admin-password-input {
+        font-size: 1.1rem;
+        padding: 10px;
+        letter-spacing: 2px;
+    }
+}
+
 @media (max-width: 360px) {
-    .archive-title, .about-title {
+
+    .archive-title,
+    .about-title {
         font-size: 1.8rem;
     }
-    
+
     .archive-card h3 {
         font-size: 1.2rem;
     }
@@ -713,7 +716,7 @@ nav {
     .menu-links a {
         font-size: 13px;
     }
-    
+
     .auth-header {
         font-size: 16px;
     }

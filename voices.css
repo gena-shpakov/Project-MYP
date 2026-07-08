@@ -87,12 +87,79 @@
     border: 1px solid var(--rebel-white);
 }
 
+.media-placeholder {
+    width: 100%;
+    max-width: 1100px;
+    margin: 50px auto;
+    border: 1px solid var(--black);
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
 .media-placeholder iframe {
-    border: none;
     display: block;
     width: 100%;
-    filter: grayscale(0.2) contrast(1.1); 
+    aspect-ratio: 16 / 9;
+    border: none;
 }
+
+.custom-album-player {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.album-cover img {
+    width: 100%;
+    border: 1px solid #000;
+    display: block;
+}
+
+.custom-album-player .media-placeholder {
+    grid-column: 2;
+}
+.spotify-player iframe {
+    width: 100%;
+    ;
+}
+.spotify-player {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px 16px 0 0;
+}
+
+.media-placeholder iframe {
+    width: 100%;
+    display: block;
+    border: none;
+    border-radius: 16px 16px 0 0;
+}
+
+.custom-album-player .track-list {
+    grid-column: 1 / 3;
+    display: grid;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.track-list button {
+    padding: 12px 15px;
+    background: transparent;
+    border: 1px solid #000;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+}
+
+.track-list button:hover,
+.track-list button.active {
+    background: #000;
+    color: #fff;
+}
+
+
+
 .team-section {
     margin-bottom: 4rem;
     width: 100%;
@@ -158,7 +225,7 @@
 }
 
 .team-card .bio {
-    font-size: 1.1rem;
+    font-size: 24px;
     line-height: 1.5;
     color: var(--rebel-white);
     opacity: 0.85;
@@ -339,6 +406,20 @@
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+.timeline-content h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 30px;
+    color: var(--rebel-white);
+    margin-bottom: 8px;
+}
+
+.timeline-content p {
+    font-size: 25px;
+    line-height: 1.5;
+    color: var(--rebel-white);
+    opacity: 0.85;
+}
+
 
 .timeline-item:hover::before {
     transform: scale(1.5);
@@ -384,5 +465,15 @@
     }
     .anatomy-grid {
         grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 768px) {
+    .custom-album-player {
+        grid-template-columns: 1fr;
+    }
+
+    .media-placeholder,
+    .track-list {
+        grid-column: auto;
     }
 }

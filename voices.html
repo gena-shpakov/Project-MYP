@@ -42,7 +42,64 @@
             <div class="media-frame-wrapper">
                 <div class="media-tab">[ МУЗИЧНИЙ АЛЬБОМ "ТИ (РОМАНТИКА)" ]</div>
                 <div class="media-placeholder">
-                    <iframe width="100%" height="450" src="https://www.youtube.com/embed/videoseries?list=PLfVvYV-o6xP7XbS09UunC_V4pP97eU67U" title="МУР - Ти (Романтика)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe
+                        src="https://www.youtube.com/embed/AHxhKPp6xAk"
+                        title="МУР - Ти [Романтика] | Full Album"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-media">
+            <div class="media-frame-wrapper">
+                <div class="media-tab">[ МУЗИЧНИЙ АЛЬБОМ "PAX ROMANA" ]</div>
+                <div class="media-placeholder">
+                    <iframe
+                        src="https://www.youtube.com/embed/51btApK4gyM"
+                        title="МУР - PAX ROMANA | Full Album"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-media">
+            <div class="media-frame-wrapper">
+                <div class="media-tab">[ МУЗИЧНИЙ АЛЬБОМ "РЕБЕЛІЯ [1991]" ]</div>
+                    <div class="spotify-player">
+                        <iframe
+                            style="border-radius:12px"
+                            src="https://open.spotify.com/embed/album/7ut7i8c8Eo8Wr4f4NGzpIv?utm_source=generator"
+                            width="100%"
+                            height="500"
+                            frameborder="0"
+                            allowfullscreen=""
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy">
+                        </iframe>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-media">
+            <div class="media-frame-wrapper">
+                <div class="media-tab">[ МУЗИЧНИЙ АЛЬБОМ "ЗАХАЛЯВНА КНИЖЕЧКА" ]</div>
+                    <div class="spotify-player">
+                        <iframe
+                            style="border-radius:12px"
+                            src="https://open.spotify.com/embed/album/18HjTvIjtY1ZrzJjqtG5VA?utm_source=generator"
+                            width="100%"
+                            height="500"
+                            frameborder="0"
+                            allowfullscreen=""
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy">
+                        </iframe>
                 </div>
             </div>
         </section>
@@ -144,5 +201,20 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script type="module" src="main.js"></script>
+
+    <script>
+        function changeZakhalyavnaTrack(videoId, button) {
+            const player = document.getElementById('zakhalyavnaPlayer');
+        
+            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        
+            document.querySelectorAll('.track-list button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+        
+            button.classList.add('active');
+        }
+</script>
+
 </body>
 </html>
