@@ -109,6 +109,10 @@ nav {
     transform: translateY(30px);
 }
 
+.image-caption {
+    font-size: 25px;
+}
+
 .cta-button {
     display: inline-block;
     padding: 16px 40px;
@@ -184,7 +188,6 @@ nav {
 .ticker-wrapper { 
     display: flex; 
     width: max-content; 
-    padding-left: 0; 
     animation: move-around 45s linear infinite; }
 
 .ticker-wrapper span { 
@@ -192,10 +195,20 @@ nav {
     font-family: 'Oswald', sans-serif; 
     font-size: 20px;
     flex-shrink: 0;
-    padding-right: 80px;
+    padding-right: 10px;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
+
+@keyframes move-around {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(calc(-50%));
+    }
+}
+
 .card-tag {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10.5px;
@@ -204,6 +217,27 @@ nav {
     padding: 2px 6px;
     display: inline-block;
     margin-bottom: 0.8rem;
+}
+
+.archive-section {
+    margin-top: 80px;
+}
+
+.archive-section-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--black);
+    padding-bottom: 10px;
+}
+
+.archive-section-subtitle {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 25px;
+    margin-bottom: 40px;
+    opacity: 0.8;
 }
 
 .archive-card {

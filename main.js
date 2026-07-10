@@ -17,9 +17,10 @@ const database = getDatabase(app);
 const auth = getAuth(app);
 
 
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
     if (typeof gsap !== "undefined") {
         const tl = gsap.timeline();
+
         tl.to("header", { opacity: 1, y: 0, duration: 1, ease: "power4.out" })
           .to(".pre-title", { opacity: 1, y: 0, duration: 0.6 }, "-=0.5")
           .to(".main-title", { opacity: 1, y: 0, duration: 0.8 }, "-=0.4")
