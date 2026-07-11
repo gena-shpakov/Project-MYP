@@ -712,8 +712,6 @@ nav {
     .social-link {
         padding: 1rem 0.5rem;
     }
-
-    /* Авторизація */
     .auth-box {
         padding: 2rem 1.5rem;
         box-shadow: 8px 8px 0px var(--red);

@@ -221,6 +221,25 @@
     filter: grayscale(0) contrast(1);
 }
 
+.mur-audio-player {
+    width: 100%;
+    height: 152px;
+    border: none;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .mur-audio-player {
+        height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mur-audio-player {
+        height: 200px;
+    }
+}
+
 @media (max-width: 768px) {
     .case-main {
         padding-top: 100px;
