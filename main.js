@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         errorMsg.style.color = "var(--black)";
         errorMsg.innerText = "З'ЄДНАННЯ З АРХІВОМ КДБ...";
         
-        const adminEmail = "admin@projectmup.com"; 
+        const adminEmail = "adminn@projectmyp.com"; 
 
         signInWithEmailAndPassword(auth, adminEmail, enteredPassword)
             .then((userCredential) => {

@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=EB+Garamond:ital,wght@0,400;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="admin.css">
+
+    <link rel="icon" href="MYR on site.png" type="image/png">
 </head>
 <body class="case-page">
 
@@ -54,6 +56,13 @@
                             <h3 class="stat-big-number" id="focus-page" style="color: var(--red);">---</h3>
                         </div>
                     </div>
+                    <div class="archive-card stat-mini-card">
+                        <div class="card-folder-tab">ЛОГ.04</div>
+                        <div class="card-body">
+                            <p>НАЙАКТИВНІШЕ МІСТО</p>
+                            <h3 class="stat-big-number" id="top-city">---</h3>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="table-wrapper">
@@ -62,6 +71,7 @@
                             <tr>
                                 <th>КОД ВІЗИТУ</th>
                                 <th>ВІДКРИТА СТОРІНКА</th>
+                                <th>МІСТО</th>
                                 <th>ЧАС ФІКСАЦІЇ</th>
                                 <th>БРАУЗЕР КОРИСТУВАЧА</th>
                             </tr>
@@ -146,7 +156,7 @@
         document.body.style.display = 'none';
 
         onAuthStateChanged(auth, (user) => {
-            if (user && user.email === "admin@projectmup.com") {
+            if (user && user.email === "adminn@projectmyp.com") {
                 // Користувач підтверджений — відкриваємо інтерфейс та запускаємо логер
                 document.body.style.display = 'block';
                 ініціалізуватиАрхів(); 
@@ -191,6 +201,7 @@
                             <tr>
                                 <td>#${key.substring(1, 6).toUpperCase()}</td>
                                 <td><code>/${visit.page}</code></td>
+                                <td>${visit.ciry || "Невідомо"}, ${visit.country || ""}</td>
                                 <td>${date}</td>
                                 <td style="font-size: 11px; opacity: 0.6;">${visit.userAgent}</td>
                             </tr>
