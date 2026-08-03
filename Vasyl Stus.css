@@ -342,33 +342,232 @@
     display:block;
 }
 
-@media (max-width:768px){
-    .mur-track-card{
-        flex-direction:column;
-        align-items:flex-start;
-        padding:18px;
+/* =========================
+   Планшети (до 768px)
+========================= */
+@media (max-width: 768px) {
+
+    .case-main {
+        padding: 100px 14px 40px;
     }
 
-    .mur-track-cover{
-        width:84px;
-        height:84px;
+    .case-container {
+        padding: 28px 20px;
+        box-shadow: 10px 10px 0 rgba(0,0,0,.05);
     }
 
-    .mur-track-content h3{
-        font-size:1.3rem;
+    .case-name {
+        font-size: 2.3rem;
+        line-height: 1.1;
+        word-break: break-word;
     }
 
-    .mur-platforms{
-        grid-template-columns:1fr;
+    .case-status,
+    .case-number {
+        font-size: .8rem;
     }
 
-    .mur-audio-wrapper iframe{
-        height:110px;
+    .case-bio {
+        flex-direction: column;
+        gap: 24px;
+        margin: 28px 0;
+    }
+
+    .bio-photo {
+        width: 100%;
+        max-width: 260px;
+        margin: 0 auto;
+    }
+
+    .bio-data ul {
+        font-size: .88rem;
+        line-height: 1.7;
+    }
+
+    .content-block h2,
+    .case-mur-section h2 {
+        font-size: 1.35rem;
+    }
+
+    .content-block p,
+    .mur-description {
+        font-size: 1.08rem;
+    }
+
+    .case-quote {
+        font-size: 1.4rem;
+        margin: 28px 0;
+        padding-left: 16px;
+    }
+
+    .case-mur-section {
+        padding: 22px 18px;
+    }
+
+    .mur-badge {
+        position: static;
+        display: inline-block;
+        margin-bottom: 12px;
+    }
+
+    .mur-track-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        font-size: .8rem;
+    }
+
+    .mur-track-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 18px;
+        gap: 16px;
+    }
+
+    .mur-track-cover {
+        width: 88px;
+        height: 88px;
+    }
+
+    .mur-track-content {
+        width: 100%;
+    }
+
+    .mur-track-content h3 {
+        font-size: 1.35rem;
+    }
+
+    .mur-platforms {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .platform-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .mur-audio-wrapper iframe {
+        height: 152px;
+    }
+
+    .case-footer .back-link {
+        width: 100%;
+        text-align: center;
     }
 }
 
-@media (max-width:480px){
-    .mur-audio-wrapper iframe{
-        height:96px;
+
+@media (max-width: 480px) {
+
+    .case-main {
+        padding: 88px 10px 28px;
+    }
+
+    .case-container {
+        padding: 22px 16px;
+        border-radius: 10px;
+    }
+
+    .case-header {
+        margin-bottom: 22px;
+        padding-bottom: 16px;
+    }
+
+    .case-name {
+        font-size: 1.9rem;
+    }
+
+    .case-status,
+    .case-number {
+        font-size: .72rem;
+    }
+
+    .bio-data h3 {
+        font-size: 1.1rem;
+    }
+
+    .bio-data ul {
+        font-size: .82rem;
+    }
+
+    .content-block h2,
+    .case-mur-section h2 {
+        font-size: 1.2rem;
+    }
+
+    .content-block p,
+    .mur-description {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .case-quote {
+        font-size: 1.2rem;
+        padding-left: 14px;
+    }
+
+    .mur-track-card {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .mur-track-cover {
+        width: 72px;
+        height: 72px;
+    }
+
+    .mur-track-content h3 {
+        font-size: 1.15rem;
+    }
+
+    .mur-track-content p {
+        font-size: .85rem;
+        margin-bottom: 12px;
+    }
+
+    .platform-btn {
+        padding: 11px 14px;
+        font-size: .85rem;
+    }
+
+    .mur-audio-wrapper {
+        border-radius: 10px;
+        display: none;
+    }
+
+    .mur-audio-wrapper iframe {
+        height: 152px;
+    }
+
+    .mur-lyrics {
+        font-size: .82rem;
+        padding: 12px 14px;
+    }
+
+    .case-footer {
+        margin-top: 36px;
+    }
+}
+
+@media (max-width: 430px)   {
+    .mur-audio-wrapper{
+        display:none;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .case-name {
+        font-size: 1.7rem;
+    }
+
+    .mur-track-content h3 {
+        font-size: 1.05rem;
+    }
+
+    .platform-btn {
+        font-size: .8rem;
+        padding: 10px 12px;
     }
 }
